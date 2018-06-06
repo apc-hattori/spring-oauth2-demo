@@ -1,0 +1,23 @@
+spring:
+  session:
+    storeType: redis
+  redis:
+    url: ${REDIS_URL:redis://redis:6379}
+security:
+  basic:
+    enabled: false
+  oauth2:
+    sso:
+      login-path: /login
+    client:
+      clientId: ${OAUTH2_CLIENT_ID:}
+      clientSecret: ${OAUTH2_CLIENT_SECRET:}
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      authenticationScheme: header
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user
+logging:
+  level:
+    root: ${LOG_LEVEL:WARN}

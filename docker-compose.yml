@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:1.15
+    volumes:
+      - "./nginx/conf.d/:/etc/nginx/conf.d/"
+    ports:
+      - "8080:8080"
+    links:
+      - app1
+      - app2
+  app1:
+    build: .
+    environment:
+      SPRING_APPLICATION_NAME: app1
+      JAR_FILE: ${JAR_FILE:-spring-oauth2-demo-0.0.1-SNAPSHOT.jar}
+      OAUTH2_CLIENT_ID: $OAUTH2_CLIENT_ID
+      OAUTH2_CLIENT_SECRET: $OAUTH2_CLIENT_SECRET
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    volumes:
+      - "./target/:/opt/app"
+    links:
+      - redis
+  app2:
+    build: .
+    environment:
+      SPRING_APPLICATION_NAME: app2
+      JAR_FILE: ${JAR_FILE:-spring-oauth2-demo-0.0.1-SNAPSHOT.jar}
+      OAUTH2_CLIENT_ID: $OAUTH2_CLIENT_ID
+      OAUTH2_CLIENT_SECRET: $OAUTH2_CLIENT_SECRET
+      LOG_LEVEL: ${LOG_LEVEL:-WARN}
+    volumes:
+      - "./target/:/opt/app"
+    links:
+      - redis
+  redis:
+    image: "redis:3.2"

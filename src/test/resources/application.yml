@@ -1,0 +1,6 @@
+spring:
+  session:
+    storeType: hash_map
+logging:
+  level:
+    root: INFO
