@@ -24,7 +24,7 @@ docker-compose build
 ```
 5. Build a jar file and start docker-compose.
 ```
-./mvnw package
+./mvnw package -Dmaven.test.skip=true
 docker-compose up -d
 ```
 6. Wait a few minutes.
